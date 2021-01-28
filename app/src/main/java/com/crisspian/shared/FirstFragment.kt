@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crisspian.shared.databinding.FragmentFirstBinding
-import com.crisspian.shared.model.Task
 
 
 /**
@@ -38,33 +38,28 @@ class FirstFragment : Fragment() {
         binding.rvTask.adapter = adapter
         binding.rvTask.layoutManager = LinearLayoutManager(context)
 
-        val task = Task(1,
-                "Mi primera tarea",
-                "Esta es una tarea de prueba",
-                "27-01-2021",
-                2,
-                false)
-
-        val task2 = Task(2,
-                "Mi Segunda tarea",
-                "Esta es una tarea de prueba dos",
-                "28-01-2021",
-                1,
-                false)
-
-        val task3 = Task(3,
-                "Mi tercera tarea",
-                "Estsdsds",
-                "28-01-2021",
-                1,
-                true)
-
-        viewModel.insertTask(task3)
-
         // Esto esta observando al objeto expuesto en el viewModel
         viewModel.allTask.observe(viewLifecycleOwner, Observer {
-            adapter.update(it)
+            it?.let {
+                adapter.update(it)
+            }
         })
 
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
+
+        adapter.selectedItem().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Log.d("ITEM SELECTED", it.title)
+                viewModel.selected(it)
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }
+        })
+
+
     }
+
+
 }
