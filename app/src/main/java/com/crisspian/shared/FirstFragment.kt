@@ -19,6 +19,7 @@ import com.crisspian.shared.databinding.FragmentFirstBinding
 class FirstFragment : Fragment() {
 
     private lateinit var binding: FragmentFirstBinding
+
     private val viewModel : TaskViewModel by activityViewModels()
 
     override fun onCreateView(
