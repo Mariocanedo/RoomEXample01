@@ -5,6 +5,9 @@ plugins {
 }
 
 android {
+
+   namespace 'com.crisspian.shared' // Agregar esta línea para especificar el namespace
+
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
